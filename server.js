@@ -1,13 +1,17 @@
-var express = require ('express');
-var app = express();
-app.use (express.json());
-app.get ('/',(req,res)=>{
-    res.send ({
-        "message":"ok",
-        "status":200
-    })
-})
+var express = require("express");
+var pool = require("./connection");
 
-app.listen (3000,function(){
-    console.log("Server started at port 3000");
+var app = express();
+
+app.use(express.json());
+
+app.get("/", function (req, res) {
+  pool.query(`SELECT * from facebook;`, function (err, rows) {
+      if (err)throw err;
+    res.send(rows);
+  });
+});
+
+app.listen(3000, function () {
+  console.log("Server started at port 3000");
 });
