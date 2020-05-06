@@ -21,6 +21,23 @@ app.post("/create/user", function (req, res) {
     });
   });
 
+  app.put("/update/user", function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    pool.query(`UPDATE facebook SET password = "${password}" WHERE username = "${username}"  `, function (err, rows) {
+        if (err)throw err;
+      res.send(rows);
+    });
+  });
+
+  app.delete("/delete/user", function (req, res) {
+    var username = req.body.username;
+    pool.query(`DELETE FROM facebook WHERE username = "${username}"  `, function (err, rows) {
+        if (err)throw err;
+      res.send(rows);
+    });
+  });
+
 
 
 app.listen(3000, function () {
